@@ -12,9 +12,13 @@ Route::get('/user', function (Request $request) {
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 
+    // Show All Post,No Need Authentication
+    Route::get('show/post',[PostController::class,'getAllPost']);
 
 Route::middleware('auth:sanctum')->group(function(){
 Route::post('/logout',[AuthController::class,'logout']);
     //Blog API Development
     Route::post('add/post',[PostController::class,'add_new_post']);
-});
+    Route::post('edit/post',[PostController::class,'edit_post']);
+    Route::post('edit/post/{id}',[PostController::class,'edit_post_id']);
+    Route::delete('delete/post/{id}', [PostController::class, 'delete_post']);});
