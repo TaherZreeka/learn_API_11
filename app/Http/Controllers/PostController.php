@@ -102,6 +102,23 @@ class PostController extends Controller
             return response()->json(['error'=>$exception->getMessage()]);
         }
     }
+    public function getPost($post_id){
+        // $posts = Post::with('comment', 'user')->where('id', $post_id)->first();
+
+        try {
+            $post = Post::with('comments', 'user') // Corrected relationship names
+                    ->where('id', $post_id)   // Removed trailing space
+                    ->first();
+
+        if (!$post) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+
+        return response()->json(['post' => $post], 200);
+        } catch (\Exception $exception) {
+            return response()->json(['error'=>$exception->getMessage()]);
+        }
+    }
 
     public function delete_post(Request $request, $id)
 {
